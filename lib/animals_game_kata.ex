@@ -1,0 +1,2 @@
+defmodule AnimalsGame do
+end
