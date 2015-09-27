@@ -8,26 +8,35 @@ defmodule AnimalsGame do
 		question(Question.firstQuestion())
 	end
 
-	def question(%Question{message: message, yes: yes, no: no}) do
-		response = IO.gets message
+	def question(question = %Question{}) do
+		response = IO.gets question.message
 		if (response == "sim\n") do 
-			question(yes)
-		else 
-			question(no)
+			question(question.yes, question)
+		else
+			question(question.no, question)
 		end
 	end
 
-	def question(%Victory{bye: bye, message: message, playAgain: playAgain}) do
-		IO.puts message
-		response = IO.gets playAgain
+	def question(question = %Question{}, state = %Question{}) do
+		response = IO.gets question.message
+		if (response == "sim\n") do 
+			question(question.yes, question)
+		else
+			question(question.no, question)
+		end
+	end
+
+	def question(victory = %Victory{}, state = %Question{}) do
+		IO.puts victory.message
+		response = IO.gets victory.playAgain
 		if (response == "sim\n") do 
 			question()
 		else 
-			IO.puts bye
+			IO.puts victory.bye
 		end
 	end
 
-	def question(%Learn{currentAnimal: currentAnimal, animalMessage: animalMessage, hability: hability}) do
+	def question(learn = %Learn{}, state = %Question{}) do
 		IO.puts "Não terminado! ainda em desenvolvimento!"
 	end
 end
