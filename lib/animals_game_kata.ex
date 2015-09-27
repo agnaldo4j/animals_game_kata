@@ -1,2 +1,1 @@
-defmodule AnimalsGame do
-end
+AnimalsGame.question()
