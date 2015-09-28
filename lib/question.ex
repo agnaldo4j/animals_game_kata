@@ -1,7 +1,7 @@
 defmodule Question do
 	@derive Access
 
-	defstruct message: "", yes: %{}, no: %{}
+	defstruct message: "", yes: %{}, no: %{}, animal: ""
 
 	def prepareQuestion() do
 		"Pense em um animal...\n"
@@ -21,12 +21,14 @@ defmodule Question do
 			yes: %Question{
 				message: "O animal que vc pensou é um(a) Tubarão?\n",
 				yes: victory,
-				no: learn
+				no: learn,
+				animal: "Tubarão"
 			},
 			no: %Question{
 				message: "O animal que vc pensou é um(a) Leão?\n",
 				yes: victory,
-				no: learn
+				no: learn,
+				animal: "Leão"
 			}
 		}
 	end
@@ -37,7 +39,8 @@ defmodule Question do
 			yes: %Question{
 				message: "O animal que vc pensou é um(a) #{newAnimal}?\n",
 				yes: oldQuestion.yes,
-				no: oldQuestion.no
+				no: oldQuestion.no,
+				animal: newAnimal
 			},
 			no: oldQuestion
 		}

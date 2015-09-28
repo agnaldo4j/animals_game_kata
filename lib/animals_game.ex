@@ -46,7 +46,7 @@ defmodule AnimalsGame do
 
 	defp _question(learn = %Learn{}, state = %Question{}) do
 		newAnimal = IO.gets learn.animalMessage
-		newHability = IO.gets "O que um #{newAnimal} faz que um oldAnimal não?\n"
+		newHability = IO.gets "O que um #{newAnimal} faz que um(a) #{state.animal} não?\n"
 		
 		Question.createQuestion(newHability, newAnimal, state)
 	end
