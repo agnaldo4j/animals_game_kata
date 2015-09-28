@@ -19,15 +19,27 @@ defmodule Question do
 		%Question{ 
 			message: "O animal que vc pensou vive na agua?\n",
 			yes: %Question{
-				message: "O animal que vc pensou é um Tubarão?\n",
+				message: "O animal que vc pensou é um(a) Tubarão?\n",
 				yes: victory,
 				no: learn
 			},
 			no: %Question{
-				message: "O animal que vc pensou é um Leão?\n",
+				message: "O animal que vc pensou é um(a) Leão?\n",
 				yes: victory,
 				no: learn
 			}
+		}
+	end
+
+	def createQuestion(newHability, newAnimal, oldQuestion) do
+		%Question{ 
+			message: "O animal que vc pensou #{newHability}?\n",
+			yes: %Question{
+				message: "O animal que vc pensou é um(a) #{newAnimal}?\n",
+				yes: oldQuestion.yes,
+				no: oldQuestion.no
+			},
+			no: oldQuestion
 		}
 	end
 end

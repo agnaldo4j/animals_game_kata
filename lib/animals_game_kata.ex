@@ -1,1 +1,1 @@
-AnimalsGame.question()
+AnimalsGame.start()

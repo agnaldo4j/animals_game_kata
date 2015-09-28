@@ -1,42 +1,53 @@
 
 defmodule AnimalsGame do
-	def question() do
+	@derive Access
+
+	def start() do
 		IO.gets Question.prepareQuestion()
 
 		IO.gets Question.readyQuestion()
 
-		question(Question.firstQuestion())
+		_question(Question.firstQuestion())
 	end
 
-	def question(question = %Question{}) do
+	defp _question(question = %Question{}) do
 		response = IO.gets question.message
 		if (response == "sim\n") do 
-			question(question.yes, question)
+			newState = %{question | yes: _question(question.yes, question)}
 		else
-			question(question.no, question)
+			newState = %{question | no: _question(question.no, question)}
+		end
+		_question(newState)
+	end
+
+	defp _question(question = %Question{}, state = %Question{}) do
+		response = IO.gets question.message
+		if (response == "sim\n") do 
+			%{question | yes: _question(question.yes, question)}
+		else
+			if(question.no == %Learn{}) do
+				_question(question.no, question)
+			else
+				%{question | no: _question(question.no, question)}
+			end
 		end
 	end
 
-	def question(question = %Question{}, state = %Question{}) do
-		response = IO.gets question.message
-		if (response == "sim\n") do 
-			question(question.yes, question)
-		else
-			question(question.no, question)
-		end
-	end
-
-	def question(victory = %Victory{}, state = %Question{}) do
+	defp _question(victory = %Victory{}, state = %Question{}) do
 		IO.puts victory.message
 		response = IO.gets victory.playAgain
 		if (response == "sim\n") do 
-			question()
+			victory
 		else 
 			IO.puts victory.bye
+			System.halt
 		end
 	end
 
-	def question(learn = %Learn{}, state = %Question{}) do
-		IO.puts "Não terminado! ainda em desenvolvimento!"
+	defp _question(learn = %Learn{}, state = %Question{}) do
+		newAnimal = IO.gets learn.animalMessage
+		newHability = IO.gets "O que um #{newAnimal} faz que um oldAnimal não?\n"
+		
+		Question.createQuestion(newHability, newAnimal, state)
 	end
 end
