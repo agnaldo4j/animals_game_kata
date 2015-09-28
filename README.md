@@ -1,5 +1,5 @@
-AnimalsGame
-===========
+#Jogo dos Animais em Elixir 
+
 
 ## Descrição da implementação em Smalltalk
 
